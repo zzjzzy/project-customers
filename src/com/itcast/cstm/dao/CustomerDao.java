@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.itcast.cstm.domain.Customer;
@@ -29,6 +30,28 @@ public class CustomerDao {
 		try {
 			String sql = "select * from customer";
 			return qr.query(sql, new BeanListHandler<Customer>(Customer.class));
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Customer findOne(String cid) {
+		try {
+			String sql = "select * from customer where cid = ?";
+			return qr.query(sql, new BeanHandler<Customer>(Customer.class),cid);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void updateOne(Customer customer) {
+		String sql = "update customer set cname = ?, gender = ?,"
+				+ "birthday = ?, cellphone = ?, email = ?, description = ? where cid = ?";
+		Object[] params = {customer.getCname(), customer.getGender(),
+				customer.getBirthday(), customer.getCellphone(), 
+				customer.getEmail(), customer.getDescription(), customer.getCid()};
+		try {
+			qr.update(sql, params);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

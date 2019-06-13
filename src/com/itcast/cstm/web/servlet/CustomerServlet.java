@@ -39,6 +39,23 @@ public class CustomerServlet extends BaseServlet {
 		return "f:/list.jsp";
 	}
 	
+	public String preEdit(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String cid = request.getParameter("cid");
+		Customer customer = customerService.findOne(cid);
+		request.setAttribute("cstm", customer);
+		return "f:/edit.jsp";
+	}
+	
+	public String edit(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		Customer customer = CommonUtils.toBean(request.getParameterMap(), Customer.class);
+		customerService.updateOne(customer);
+		request.setAttribute("msg", "恭喜，编辑成功！");
+		return "f:/msg.jsp";
+	}
+	
+	
 //	@Test
 //	public void add() {
 //		Customer c = new Customer();
