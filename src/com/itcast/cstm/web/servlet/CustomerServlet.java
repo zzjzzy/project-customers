@@ -55,6 +55,20 @@ public class CustomerServlet extends BaseServlet {
 		return "f:/msg.jsp";
 	}
 	
+	public String delete(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		customerService.delete(request.getParameter("cid"));
+		request.setAttribute("msg", "恭喜，删除成功！");
+		return "f:/msg.jsp";
+	}
+	
+	public String query(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		String cname = request.getParameter("cname");
+		request.setAttribute("cstmList", customerService.findByParam(cname));
+		return "f:/list.jsp";
+	}
+	
 	
 //	@Test
 //	public void add() {

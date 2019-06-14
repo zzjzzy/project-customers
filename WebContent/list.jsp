@@ -41,7 +41,7 @@
 		<td>${cstm.description }</td>
 		<td>
 			<a href="<c:url value='/CustomerServlet?method=preEdit&cid=${cstm.cid }'/>">编辑</a>
-			<a href="<c:url value='/msg.jsp'/>">删除</a>
+			<a href="<c:url value='/CustomerServlet?method=delete&cid=${cstm.cid }'/>">删除</a>
 		</td>
 	</tr>
 </c:forEach>

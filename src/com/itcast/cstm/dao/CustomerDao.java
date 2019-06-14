@@ -56,4 +56,22 @@ public class CustomerDao {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public void delete(String cid) {
+		String sql = "delete from customer where cid = ?";
+		try {
+			qr.update(sql, cid);
+		} catch (SQLException e) {
+			new RuntimeException(e);
+		}
+	}
+	
+	public List<Customer> findByParam(String cname){
+		String sql = "select * from customer where cname like ?";
+		try {
+			return qr.query(sql, new BeanListHandler<Customer>(Customer.class), "%"+cname+"%");
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

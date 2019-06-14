@@ -24,4 +24,12 @@ public class CustomerService {
 	public void updateOne(Customer customer) {
 		customerDao.updateOne(customer);
 	}
+	
+	public void delete(String cid) {
+		customerDao.delete(cid);
+	}
+	
+	public List<Customer> findByParam(String cname){
+		return customerDao.findByParam(cname);
+	}
 }
