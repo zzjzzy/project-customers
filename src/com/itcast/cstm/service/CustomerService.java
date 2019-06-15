@@ -32,4 +32,8 @@ public class CustomerService {
 	public List<Customer> findByParam(String cname){
 		return customerDao.findByParam(cname);
 	}
+
+	public List<Customer> query(Customer criteria) {
+		return customerDao.query(criteria);
+	}
 }

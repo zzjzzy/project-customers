@@ -1,6 +1,7 @@
 package com.itcast.cstm.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
@@ -8,6 +9,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.itcast.cstm.domain.Customer;
+import com.mysql.fabric.xmlrpc.base.Array;
 
 import cn.itcast.jdbc.TxQueryRunner;
 
@@ -71,6 +73,42 @@ public class CustomerDao {
 		try {
 			return qr.query(sql, new BeanListHandler<Customer>(Customer.class), "%"+cname+"%");
 		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Customer> query(Customer criteria) {
+		try {
+			StringBuilder sql = new StringBuilder("select * from customer where 1=1 ");
+			List<Object> params = new ArrayList<Object>();
+			String cname = criteria.getCname();
+			if (cname != null && !cname.trim().isEmpty()) {
+				sql.append("and cname like ? ");
+				params.add("%" + cname + "%");
+			}
+			
+			String gender = criteria.getGender();
+			if (gender != null && !gender.trim().isEmpty()) {
+				sql.append("and gender = ? ");
+				params.add(gender);
+			}
+			
+			String email = criteria.getEmail();
+			if (email != null && !email.trim().isEmpty()) {
+				sql.append("and email like ? ");
+				params.add("%" + email + "%");
+			}
+			
+			String cellphone = criteria.getCellphone();
+			if (cellphone != null && !cellphone.trim().isEmpty()) {
+				sql.append("and cellphone like ? ");
+				params.add("%" + cellphone + "%");
+			}
+			
+			return qr.query(sql.toString(), 
+					new BeanListHandler<Customer>(Customer.class), 
+					params.toArray());
+		} catch(SQLException e) {
 			throw new RuntimeException(e);
 		}
 	}

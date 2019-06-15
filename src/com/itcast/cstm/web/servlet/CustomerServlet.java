@@ -64,8 +64,10 @@ public class CustomerServlet extends BaseServlet {
 	
 	public String query(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		String cname = request.getParameter("cname");
-		request.setAttribute("cstmList", customerService.findByParam(cname));
+		//因为是按条件查询，所以取名为criteria。
+		Customer criteria = CommonUtils.toBean(request.getParameterMap(), Customer.class);
+		List<Customer> list = customerService.query(criteria);
+		request.setAttribute("cstmList", list);
 		return "f:/list.jsp";
 	}
 	
