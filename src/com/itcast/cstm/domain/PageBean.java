@@ -9,6 +9,14 @@ public class PageBean<T> {
 	private int ps; //page size每页记录数
 //	private int tp; // total page总页数，通过计算得到，
 	private List<T> beanList; //每条记录对应的Bean
+	private String url;
+	
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public int getPc() {
 		return pc;
 	}
